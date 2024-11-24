@@ -1,7 +1,7 @@
 <?php 
 function cargaAutomatica() {
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    $meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     $temperaturas = [
         [30, 28, 26, 22, 18, 12, 10, 14, 17, 20, 25, 29],
         [33, 30, 27, 22, 19, 13, 11, 15, 18, 21, 26, 31],
@@ -31,7 +31,7 @@ function cargaAutomatica() {
 function cargaManualCompleta() {
     $matriz = [];
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    $meses = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     echo "Carga manual de la matriz de temperaturas:\n";
     for ($i = 0; $i < count($anios); $i++) {
@@ -59,8 +59,7 @@ function muestraManualEspecifica($anio, $mes, $matriz = array()){
 }
 function mostrarCompleta($matriz) {
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     
     for ($i = 0; $i < count($anios); $i++) {
         $anio = $anios[$i];
@@ -70,13 +69,12 @@ function mostrarCompleta($matriz) {
             $mes = $meses[$j];
             echo $mes . ": " . $matriz[$anio][$mes] . "°C\n";
         }
-        echo "\n"; 
+         
     }
 }
 function mostrarFila($anio, $matriz){
 
-    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     echo "Temperaturas del año " . $anio . ":\n";          
     for($i = 0; $i < 12; $i++) {
@@ -108,8 +106,7 @@ function maxMin($matriz){
     $minMes = "enero";
     
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-              "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     for ($i = 0; $i < count($anios); $i++) {
         $anio = $anios[$i];
@@ -132,3 +129,85 @@ function maxMin($matriz){
     echo "La temperatura maxima fue de " . $maxTemp . "°C en " . $maxMes . " del " . $maxAnio . ".\n";
     echo "La temperatura minima fue de " . $minTemp . "°C en " . $minMes . " del " . $minAnio . ".\n";
 }
+function crearMatrizPrimavera($matriz){
+
+    $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    $matrizPrimavera = [];
+
+    for ($i = 0; $i < count($anios); $i++) {
+        $anio = $anios[$i];
+        
+        
+        for ($j = 0; $j < count($meses); $j++) {
+            $mes = $meses[$j];
+            if ($mes == "Octubre" || "Noviembre" || "Diciembre"){
+                $matrizPrimavera[$anio][$mes] = $matriz[$anio][$mes];
+            }
+           
+        }
+         
+    }
+
+    
+    $mesesPrimavera = ["Octubre", "Noviembre", "Diciembre"];
+
+
+    for ($i = 0; $i < count($anios); $i++) {
+        $anio = $anios[$i];
+        echo "Año: " . $anio . "\n";
+        
+        for ($j = 0; $j < count($mesesPrimavera); $j++) {
+            $mes = $mesesPrimavera[$j];
+            echo $mes . ": " . $matrizPrimavera[$anio][$mes] . "°C\n";
+        }
+         
+    }
+
+    
+}
+function crearMatrizInvierno($matriz){
+
+    $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+    $matrizInvierno = [];
+
+    for ($i = 0; $i < count($anios); $i++) {
+        $anio = $anios[$i];
+        
+        
+        for ($j = 0; $j < count($meses); $j++) {
+            $mes = $meses[$j];
+            if ($mes == "Julio" || "Agosto" || "Septiembre"){
+                $matrizInvierno[$anio][$mes] = $matriz[$anio][$mes];
+            }
+           
+        }
+         
+    }
+
+    
+    $mesesInvierno = ["Julio", "Agosto", "Septiembre"];
+
+
+    for ($i = 0; $i < count($anios); $i++) {
+        $anio = $anios[$i];
+        echo "Año: " . $anio . "\n";
+        
+        for ($j = 0; $j < count($mesesInvierno); $j++) {
+            $mes = $mesesInvierno[$j];
+            echo $mes . ": " . $matrizInvierno[$anio][$mes] . "°C\n";
+        }
+         
+    }
+
+    
+}
+
+//$matriz = cargaAutomatica();
+
+
+
+
