@@ -92,6 +92,15 @@ function muestraManualEspecifica($anio, $mes, $matriz){
     ∅
 */
 function mostrarCompleta($matriz) {
+
+    /*
+    int[] $matriz
+    int[] $anios
+    string[] $meses
+    int $anio
+    string $mes
+    */
+
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     
