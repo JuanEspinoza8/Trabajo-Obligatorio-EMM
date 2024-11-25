@@ -1,6 +1,7 @@
 <?php 
-// Easdasd
-// @return $matriz
+/* Este modulo nos permite realizar la carga automatica de una matriz, en este caso la propuesta por la catedra.
+    @return $matriz
+*/
 function cargaAutomatica() {
     /*
     int[] $anios
@@ -38,8 +39,19 @@ function cargaAutomatica() {
 
     return $matriz;
 }
-// @return $matriz
+/*  Este modulo nos permite realizar la carga de datos manuales a la matriz.
+    @return $matriz
+*/
 function cargaManualCompleta() {
+
+    /*
+    int[] $anios
+    string[] $meses
+    int[] $matriz
+    int $anio
+    string $mes
+    */
+
     $matriz = [];
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -58,19 +70,27 @@ function cargaManualCompleta() {
     }
     return $matriz;
 }
-/*
-@param int $anio
-@param string $mes
-@param int[] $matriz
-∅
+/*  Este modulo nos imprime un dato en particular de la matriz.
+    @param int $anio
+    @param string $mes
+    @param int[] $matriz
+    ∅
 */
 function muestraManualEspecifica($anio, $mes, $matriz){
 
-    echo "En " . $mes . " del " . $anio . " la temperatura fue de " . $valor = $matriz[$anio][$mes] ."°C \n";
+    /*
+    int[] $matriz
+    int $anio
+    string $mes
+    */
+
+    echo "En " . $mes . " del " . $anio . " la temperatura fue de " . $matriz[$anio][$mes] ."°C \n";
     
 }
-//@param int[] $matriz
-//∅
+/*  Este modulo imprime la matriz competa.
+    @param int[] $matriz
+    ∅
+*/
 function mostrarCompleta($matriz) {
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
