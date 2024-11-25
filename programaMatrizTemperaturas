@@ -279,6 +279,7 @@ function crearMatrizInvierno($matriz){
     /*
     int[] $anios
     string[] $meses
+    string[] $mesesInvierno
     int[] $matriz
     int [] $matrizInvierno
     int $anio
@@ -286,7 +287,7 @@ function crearMatrizInvierno($matriz){
     */
 
     $anios = [2019, 2020, 2021, 2022, 2023];
-    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    $meses = ["Julio", "Agosto", "Septiembre"];
 
     $matrizInvierno = [];
 
@@ -294,26 +295,22 @@ function crearMatrizInvierno($matriz){
         $anio = $anios[$i];
         
         
-        for ($j = 0; $j < count($meses); $j++) {
+        for ($j = 0; $j < count($meses); $j++){
             $mes = $meses[$j];
-            if ($mes == "Julio" || "Agosto" || "Septiembre"){
-                $matrizInvierno[$anio][$mes] = $matriz[$anio][$mes];
-            }
+            
+            $matrizInvierno[$anio][$mes] = $matriz[$anio][$mes];
+            
            
         }
          
     }
 
-    
-    $mesesInvierno = ["Julio", "Agosto", "Septiembre"];
-
-
     for ($i = 0; $i < count($anios); $i++) {
         $anio = $anios[$i];
         echo "Año: " . $anio . "\n";
         
-        for ($j = 0; $j < count($mesesInvierno); $j++) {
-            $mes = $mesesInvierno[$j];
+        for ($j = 0; $j < count($meses); $j++) {
+            $mes = $meses[$j];
             echo $mes . ": " . $matrizInvierno[$anio][$mes] . "°C\n";
         }
         echo "\n";
@@ -321,7 +318,6 @@ function crearMatrizInvierno($matriz){
     }
 
     return $matrizInvierno;
-    
 }
 /*  Este modulo Crea una matriz asociativa que almacenara otras matrices.
     @param int[] $matrizCompleta
