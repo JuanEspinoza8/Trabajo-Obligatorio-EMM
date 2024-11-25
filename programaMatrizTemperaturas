@@ -106,12 +106,19 @@ function mostrarCompleta($matriz) {
          
     }
 }
-/*
-@param int $anio
-@param int[] $matriz
-∅
+/*  Este modulo muestra todos los datos de una fila en particular de la matriz.
+    @param int $anio
+    @param int[] $matriz
+    ∅
 */
 function mostrarFila($anio, $matriz){
+
+    /*
+    string[] $meses
+    int[] $matriz
+    int $anio
+    int $valor
+    */
 
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
@@ -121,12 +128,22 @@ function mostrarFila($anio, $matriz){
         echo $meses[$i] . ": " . $valor . "°C \n";
     }
 }
-/*
-@param int $mes
-@param int[] $matriz
-∅
+/*  Este modulo muestra todos los datos de una columna en particular y nos devuelve un promedio de ellos.
+    @param int $mes
+    @param int[] $matriz
+    ∅
 */
 function mostrarColumnaYProm($mes, $matriz){
+
+    /*
+    int[] $anios
+    int[] $matriz
+    int $anio
+    int $valor
+    float $acu
+    float $prom
+    string $mes
+    */
 
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     $acu = 0;
@@ -144,9 +161,25 @@ function mostrarColumnaYProm($mes, $matriz){
     $prom = $acu/10;
     echo "El promedio de temperaturas del mes de ". $mes . " fue de: " . $prom . "°C \n";
 }
-//@param int[] $matriz
-//∅
+/*  Este modulo nos muestra el valor Maximo y Minimo de toda la matriz.
+    @param int[] $matriz
+    ∅
+*/
 function maxMin($matriz){
+
+    /*
+    int[] $matriz
+    int[] $anios
+    string[] $meses
+    int $anio
+    int $maxTemp
+    int $minTemp
+    int $minAnio
+    int $maxAnio
+    string $mes
+    string $minMes
+    string $maxMes
+    */
 
     $maxTemp = $matriz[2014]["Enero"];
     $maxAnio = 2014;
@@ -179,9 +212,20 @@ function maxMin($matriz){
     echo "La temperatura maxima fue de " . $maxTemp . "°C en " . $maxMes . " del " . $maxAnio . ".\n";
     echo "La temperatura minima fue de " . $minTemp . "°C en " . $minMes . " del " . $minAnio . ".\n";
 }
-//@param int[] $matriz
-//@return int[] $matrizPrimavera
+/*  Este modulo Crea y Muestra la matriz "Primavera".
+    @param int[] $matriz
+    @return int[] $matrizPrimavera
+*/
 function crearMatrizPrimavera($matriz){
+
+    /*
+    int[] $anios
+    string[] $meses
+    int[] $matriz
+    int [] $matrizPrimavera
+    int $anio
+    string $mes
+    */
 
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     $meses = ["Octubre", "Noviembre", "Diciembre"];
@@ -217,9 +261,20 @@ function crearMatrizPrimavera($matriz){
 
     
 }
-//@param int[] $matriz
-//@return int[] $matrizInvierna
+/*  Este modulo Crea y Muestra la matriz "Invierno".
+    @param int[] $matriz
+    @return int[] $matrizInvierna
+*/
 function crearMatrizInvierno($matriz){
+
+    /*
+    int[] $anios
+    string[] $meses
+    int[] $matriz
+    int [] $matrizInvierno
+    int $anio
+    string $mes
+    */
 
     $anios = [2019, 2020, 2021, 2022, 2023];
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -259,13 +314,20 @@ function crearMatrizInvierno($matriz){
     return $matrizInvierno;
     
 }
-/*
-@param int[] $matrizCompleta
-@param int[] $matrizPrimavera
-@param int[] $matrizInvierno
-@return int[] $matriz
+/*  Este modulo Crea una matriz asociativa que almacenara otras matrices.
+    @param int[] $matrizCompleta
+    @param int[] $matrizPrimavera
+    @param int[] $matrizInvierno
+    @return int[] $matriz
 */
 function matrizAsociativa($matrizCompleta, $matrizPrimavera, $matrizInvierno){
+
+    /*
+    int[] $matriz
+    int [] $matrizPrimavera
+    int [] $matrizCompleta
+    int [] $matrizInvierno
+    */
 
     $matriz = [
         "Primavera" => $matrizPrimavera,
@@ -274,12 +336,22 @@ function matrizAsociativa($matrizCompleta, $matrizPrimavera, $matrizInvierno){
     ];
     return $matriz;
 }
-/*
-@param string $cualMatriz
-@param int[] $matriz
-∅
+/*  Este modulo nos permite mostrar una matriz en particular entre las previamente almacenadas.
+    @param string $cualMatriz
+    @param int[] $matriz
+    ∅
 */
 function muestraMatrices($cualMatriz, $matriz){
+
+    /*
+    int[] $anios
+    string[] $meses
+    int[] $matriz
+    string [] $mesesInvierno
+    int $anio
+    string $mes
+    string $cualMatriz
+    */
 
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
@@ -322,7 +394,18 @@ function muestraMatrices($cualMatriz, $matriz){
         
     }
 }
-    
+
+/*  PROGRAMA Matriz Temperaturas: Este programa permite manejar y/o almacenar datos de temperatura en matrices de forma automatica o manual para gestionarlos y/o mostrarlos.
+    int[] $matriz
+    int[] $matrizPrimavera
+    int[] $matrizInvierno
+    int[] $matrizAsociativa
+    int $anio
+    string $opcion
+    string $eleccion
+    string $mes
+*/
+
 do {
     
     echo "\n--- Menú de Opciones ---\n";
