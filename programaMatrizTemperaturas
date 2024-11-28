@@ -36,6 +36,7 @@ function cargaAutomatica() {
             $matriz[$anio][$mes] = $temperaturas[$i][$j];
         }
     }
+    echo "Matriz cargada automáticamente.\n";
 
     return $matriz;
 }
@@ -68,6 +69,8 @@ function cargaManualCompleta() {
             $matriz[$anio][$mes] = trim(fgets(STDIN));
         }
     }
+    echo "Matriz cargada manualmente.\n";
+
     return $matriz;
 }
 /*  Este modulo nos imprime un dato en particular de la matriz.
@@ -76,13 +79,18 @@ function cargaManualCompleta() {
     @param int[] $matriz
     ∅
 */
-function muestraManualEspecifica($anio, $mes, $matriz){
+function muestraManualEspecifica($matriz){
 
     /*
     int[] $matriz
     int $anio
     string $mes
     */
+
+    echo "Ingrese el año: ";
+        $anio = trim(fgets(STDIN));
+        echo "Ingrese el mes: ";
+        $mes = trim(fgets(STDIN));
 
     echo "En " . $mes . " del " . $anio . " la temperatura fue de " . $matriz[$anio][$mes] ."°C \n";
     
@@ -120,7 +128,7 @@ function mostrarCompleta($matriz) {
     @param int[] $matriz
     ∅
 */
-function mostrarFila($anio, $matriz){
+function mostrarFila($matriz){
 
     /*
     string[] $meses
@@ -129,11 +137,15 @@ function mostrarFila($anio, $matriz){
     int $valor
     */
 
+    echo "Ingrese el año: ";
+        $anio = trim(fgets(STDIN));
+
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     echo "Temperaturas del año " . $anio . ":\n";          
-    for($i = 0; $i < 12; $i++) {
-        $valor = $matriz[$anio][$meses[$i]];
+    for($i = 0; $i < count($meses); $i++) {
+        $mes = $meses[$i];
+        $valor = $matriz[$anio][$mes];
         echo $meses[$i] . ": " . $valor . "°C \n";
     }
 }
@@ -142,7 +154,7 @@ function mostrarFila($anio, $matriz){
     @param int[] $matriz
     ∅
 */
-function mostrarColumnaYProm($mes, $matriz){
+function mostrarColumnaYProm($matriz){
 
     /*
     int[] $anios
@@ -153,6 +165,9 @@ function mostrarColumnaYProm($mes, $matriz){
     float $prom
     string $mes
     */
+
+    echo "Ingrese el mes: ";
+        $mes = trim(fgets(STDIN));
 
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     $acu = 0;
@@ -339,6 +354,7 @@ function matrizAsociativa($matrizCompleta, $matrizPrimavera, $matrizInvierno){
         "Completa" => $matrizCompleta,
         "Invierno" => $matrizInvierno
     ];
+    echo "Matriz asociativa creada. \n";
     return $matriz;
 }
 /*  Este modulo nos permite mostrar una matriz en particular entre las previamente almacenadas.
@@ -346,7 +362,7 @@ function matrizAsociativa($matrizCompleta, $matrizPrimavera, $matrizInvierno){
     @param int[] $matriz
     ∅
 */
-function muestraMatrices($cualMatriz, $matriz){
+function muestraMatrices($matriz){
 
     /*
     int[] $anios
@@ -357,6 +373,8 @@ function muestraMatrices($cualMatriz, $matriz){
     string $mes
     string $cualMatriz
     */
+    echo "Seleccione que matriz mostrar. Completa, Primavera o Invierno.\n";
+        $cualMatriz = trim(fgets(STDIN));
 
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
@@ -399,20 +417,12 @@ function muestraMatrices($cualMatriz, $matriz){
         
     }
 }
+// Este modulo muestra las opciones del programa y retorna la opcion elegida por la persona.
+// string $opcion
+// @return string $opcion
 
-/*  PROGRAMA Matriz Temperaturas: Este programa permite manejar y/o almacenar datos de temperatura en matrices de forma automatica o manual para gestionarlos y/o mostrarlos.
-    int[] $matriz
-    int[] $matrizPrimavera
-    int[] $matrizInvierno
-    int[] $matrizAsociativa
-    int $anio
-    string $opcion
-    string $eleccion
-    string $mes
-*/
+function menu(){
 
-do {
-    
     echo "\n--- Menú de Opciones ---\n";
     echo "a. Realizar una carga automática de la matriz\n";
     echo "b. Realizar una carga manual de la matriz\n";
@@ -430,45 +440,44 @@ do {
 
     $opcion = trim(fgets(STDIN));
 
+    return $opcion;
+}
+
+/*  PROGRAMA Matriz Temperaturas: Este programa permite manejar y/o almacenar datos de temperatura en matrices de forma automatica o manual para gestionarlos y/o mostrarlos.
+    int[] $matriz
+    int[] $matrizPrimavera
+    int[] $matrizInvierno
+    int[] $matrizAsociativa
+    string $opcion
+    
+*/
+
+do {
+    
+    $opcion = menu();
+
     if ($opcion == 'a') {
         $matriz = cargaAutomatica();
-        echo "Matriz cargada automáticamente.\n";
     } elseif ($opcion == 'b') {
         $matriz = cargaManualCompleta();
-        echo "Matriz cargada manualmente.\n";
     } elseif ($opcion == 'c') {
         mostrarCompleta($matriz);
     } elseif ($opcion == 'd') {
-        echo "Ingrese el año: ";
-        $anio = trim(fgets(STDIN));
-        echo "Ingrese el mes: ";
-        $mes = trim(fgets(STDIN));
-        muestraManualEspecifica($anio, $mes, $matriz);
+      muestraManualEspecifica($matriz);
     } elseif ($opcion == 'e') {
-        echo "Ingrese el año: ";
-        $anio = trim(fgets(STDIN));
-        mostrarFila($anio, $matriz);
+        mostrarFila($matriz);
     } elseif ($opcion == 'f') {
-        echo "Ingrese el mes: ";
-        $mes = trim(fgets(STDIN));
-        mostrarColumnaYProm($mes, $matriz);
+        mostrarColumnaYProm($matriz);
     } elseif ($opcion == 'g') {
         maxMin($matriz);
     } elseif ($opcion == 'h') {
         $matrizPrimavera = crearMatrizPrimavera($matriz);
-        
     } elseif ($opcion == 'i') {
         $matrizInvierno = crearMatrizInvierno($matriz);
-        
     } elseif ($opcion == 'j') {
         $matrizAsociativa = matrizAsociativa($matriz, $matrizPrimavera, $matrizInvierno);
-        echo "Matriz asociativa creada. \n";
-       
     } elseif ($opcion == 'k'){
-        echo "Seleccione que matriz mostrar. Completa, Primavera o Invierno.\n";
-        $eleccion = trim(fgets(STDIN));
-        muestraMatrices($eleccion, $matrizAsociativa);
-
+        muestraMatrices($matrizAsociativa);
     }
      elseif ($opcion == 'x') {
         echo "Saliendo del programa...\n";
