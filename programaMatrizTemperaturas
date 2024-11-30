@@ -89,10 +89,22 @@ function muestraManualEspecifica($matriz){
 
     echo "Ingrese el año: ";
         $anio = trim(fgets(STDIN));
-        echo "Ingrese el mes: ";
-        $mes = trim(fgets(STDIN));
 
-    echo "En " . $mes . " del " . $anio . " la temperatura fue de " . $matriz[$anio][$mes] ."°C \n";
+        if (!isset($matriz[$anio])) {
+            echo "No hay datos disponibles para el año $anio.\n";
+
+        }else{
+            echo "Ingrese el mes: ";
+            $mes = trim(fgets(STDIN));
+            $mes = ucfirst(strtolower($mes));
+
+            if (!isset($matriz[$anio][$mes])) {
+                echo "No hay datos disponibles para el mes de $mes.\n";
+                
+            }else{
+                echo "En " . $mes . " del " . $anio . " la temperatura fue de " . $matriz[$anio][$mes] ."°C \n";
+            }
+        }
     
 }
 /*  Este modulo imprime la matriz competa.
@@ -100,27 +112,32 @@ function muestraManualEspecifica($matriz){
     ∅
 */
 function mostrarCompleta($matriz) {
-
     /*
     int[] $matriz
     int[] $anios
     string[] $meses
     int $anio
+    int $valor
     string $mes
     */
-
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     
-    for ($i = 0; $i < count($anios); $i++) {
-        $anio = $anios[$i];
-        echo "Año: " . $anio . "\n";
-        
-        for ($j = 0; $j < count($meses); $j++) {
-            $mes = $meses[$j];
-            echo $mes . ": " . $matriz[$anio][$mes] . "°C\n";
+    
+    echo str_pad("Año", 8) . "| ";
+    foreach ($meses as $mes) {
+        echo str_pad($mes, 10) . "| ";
+    }
+    echo "\n" . str_repeat("-", 152) . "\n";
+
+    foreach ($anios as $anio) {
+        echo str_pad($anio, 7) . "| ";
+        foreach ($meses as $mes) {
+            $valor = $matriz[$anio][$mes] . "°C";
+            
+            echo str_pad($valor, 11) . "| ";
         }
-         
+        echo "\n";
     }
 }
 /*  Este modulo muestra todos los datos de una fila en particular de la matriz.
@@ -137,17 +154,25 @@ function mostrarFila($matriz){
     int $valor
     */
 
-    echo "Ingrese el año: ";
-        $anio = trim(fgets(STDIN));
-
     $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-    echo "Temperaturas del año " . $anio . ":\n";          
-    for($i = 0; $i < count($meses); $i++) {
-        $mes = $meses[$i];
-        $valor = $matriz[$anio][$mes];
-        echo $meses[$i] . ": " . $valor . "°C \n";
-    }
+    echo "Ingrese un año (2014/2023): ";
+        $anio = trim(fgets(STDIN));
+
+        if (!isset($matriz[$anio])) {
+            echo "No hay datos disponibles para el año $anio.\n";
+            
+        }else{
+
+            echo "\n";
+            echo "Temperaturas del año " . $anio . ":\n";    
+
+            for($i = 0; $i < count($meses); $i++) {
+                $mes = $meses[$i];
+                $valor = $matriz[$anio][$mes];
+                echo $meses[$i] . ": " . $valor . "°C \n";
+        }
+}
 }
 /*  Este modulo muestra todos los datos de una columna en particular y nos devuelve un promedio de ellos.
     @param int $mes
@@ -165,25 +190,33 @@ function mostrarColumnaYProm($matriz){
     float $prom
     string $mes
     */
+    $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     echo "Ingrese el mes: ";
         $mes = trim(fgets(STDIN));
+        $mes = ucfirst(strtolower($mes));
+    
+    if (!in_array($mes, $meses)) {
+            echo "No hay datos disponibles para el mes de $mes.\n";
+            
+    }else{
 
-    $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    $acu = 0;
-    echo "Temperaturas de " . $mes . ":\n";
-    for($i = 0; $i < count($anios); $i++) {
+        $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+        $acu = 0;
+        echo "Temperaturas de " . $mes . ":\n";
+        for($i = 0; $i < count($anios); $i++) {
 
-        $anio = $anios[$i];
+            $anio = $anios[$i];
         
 
-        $valor = $matriz[$anio][$mes];
-        echo "Año " . $anio . ": " . $valor . "°C \n";
-        $acu += $valor;
-    }
+            $valor = $matriz[$anio][$mes];
+            echo "Año " . $anio . ": " . $valor . "°C \n";
+            $acu += $valor;
+        }
     
-    $prom = $acu/10;
-    echo "El promedio de temperaturas del mes de ". $mes . " fue de: " . $prom . "°C \n";
+        $prom = $acu/10;
+        echo "El promedio de temperaturas del mes de ". $mes . " fue de: " . $prom . "°C \n";
+    }
 }
 /*  Este modulo nos muestra el valor Maximo y Minimo de toda la matriz.
     @param int[] $matriz
@@ -238,9 +271,10 @@ function maxMin($matriz){
 }
 /*  Este modulo Crea y Muestra la matriz "Primavera".
     @param int[] $matriz
+    @param bool $muestra
     @return int[] $matrizPrimavera
 */
-function crearMatrizPrimavera($matriz){
+function crearMatrizPrimavera($matriz, $muestra){
 
     /*
     int[] $anios
@@ -248,6 +282,7 @@ function crearMatrizPrimavera($matriz){
     int[] $matriz
     int [] $matrizPrimavera
     int $anio
+    int $valor
     string $mes
     */
 
@@ -270,16 +305,25 @@ function crearMatrizPrimavera($matriz){
          
     }
 
-    for ($i = 0; $i < count($anios); $i++) {
-        $anio = $anios[$i];
-        echo "Año: " . $anio . "\n";
-        
-        for ($j = 0; $j < count($meses); $j++) {
-            $mes = $meses[$j];
-            echo $mes . ": " . $matrizPrimavera[$anio][$mes] . "°C\n";
+    if($muestra == true){
+
+    
+
+        echo str_pad("Año", 8) . "| ";
+        foreach ($meses as $mes) {
+            echo str_pad($mes, 10) . "| ";
+        }
+        echo "\n" . str_repeat("-", 45) . "\n";
+
+        foreach ($anios as $anio) {
+            echo str_pad($anio, 7) . "| ";
+        foreach ($meses as $mes) {
+            $valor = $matriz[$anio][$mes] . "°C";
+            
+            echo str_pad($valor, 11) . "| ";
         }
         echo "\n";
-         
+    }
     }
     return $matrizPrimavera;
 
@@ -287,17 +331,18 @@ function crearMatrizPrimavera($matriz){
 }
 /*  Este modulo Crea y Muestra la matriz "Invierno".
     @param int[] $matriz
+    @param bool $muestra
     @return int[] $matrizInvierna
 */
-function crearMatrizInvierno($matriz){
+function crearMatrizInvierno($matriz, $muestra){
 
     /*
     int[] $anios
     string[] $meses
-    string[] $mesesInvierno
     int[] $matriz
     int [] $matrizInvierno
     int $anio
+    int $valor
     string $mes
     */
 
@@ -320,17 +365,24 @@ function crearMatrizInvierno($matriz){
          
     }
 
-    for ($i = 0; $i < count($anios); $i++) {
-        $anio = $anios[$i];
-        echo "Año: " . $anio . "\n";
-        
-        for ($j = 0; $j < count($meses); $j++) {
-            $mes = $meses[$j];
-            echo $mes . ": " . $matrizInvierno[$anio][$mes] . "°C\n";
+    if($muestra == true){
+
+        echo str_pad("Año", 8) . "| ";
+        foreach ($meses as $mes) {
+            echo str_pad($mes, 10) . "| ";
+        }
+        echo "\n" . str_repeat("-", 45) . "\n";
+
+        foreach ($anios as $anio) {
+            echo str_pad($anio, 7) . "| ";
+        foreach ($meses as $mes) {
+            $valor = $matriz[$anio][$mes] . "°C";
+            
+            echo str_pad($valor, 11) . "| ";
         }
         echo "\n";
-         
-    }
+        }
+    }   
 
     return $matrizInvierno;
 }
@@ -370,51 +422,76 @@ function muestraMatrices($matriz){
     int[] $matriz
     string [] $mesesInvierno
     int $anio
+    int $valor
     string $mes
     string $cualMatriz
     */
+    $primavera = crearMatrizPrimavera($matriz, false);
+    $invierno = crearMatrizInvierno($matriz, false);
+    $asociativa = matrizAsociativa($matriz, $primavera, $invierno);
+
     echo "Seleccione que matriz mostrar. Completa, Primavera o Invierno.\n";
         $cualMatriz = trim(fgets(STDIN));
+        $cualMatriz = ucfirst(strtolower($cualMatriz));
+
+        if (!isset($asociativa[$cualMatriz])) {
+            echo "No existe la matriz " . $cualMatriz . ". \n";
+
+        }else{
 
     $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
 
     if($cualMatriz == "Completa"){
 
-        mostrarCompleta($matriz["Completa"]);
+        mostrarCompleta($asociativa["Completa"]);
         
     }else if($cualMatriz == "Invierno"){
 
-        $mesesInvierno = ["Julio", "Agosto", "Septiembre"];
+        $meses= ["Julio", "Agosto", "Septiembre"];
         $anios = [2019, 2020, 2021, 2022, 2023];
 
 
-        for ($i = 0; $i < count($anios); $i++) {
-            $anio = $anios[$i];
-            echo "Año: " . $anio . "\n";
-        
-            for ($j = 0; $j < count($mesesInvierno); $j++) {
-                $mes = $mesesInvierno[$j];
-                echo $mes . ": " . $matriz["Invierno"][$anio][$mes] . "°C\n";
+        echo str_pad("Año", 8) . "| ";
+        foreach ($meses as $mes) {
+            echo str_pad($mes, 10) . "| ";
         }
+        echo "\n" . str_repeat("-", 45) . "\n";
+
+        foreach ($anios as $anio) {
+            echo str_pad($anio, 7) . "| ";
+        foreach ($meses as $mes) {
+            $valor = $matriz[$anio][$mes] . "°C";
+            
+            echo str_pad($valor, 11) . "| ";
+        }
+        echo "\n";
     }
+    
+
          
     }else{
 
         $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
         $meses = ["Octubre", "Noviembre", "Diciembre"];
 
-        for ($i = 0; $i < count($anios); $i++) {
-            $anio = $anios[$i];
-            echo "Año: " . $anio . "\n";
-            
-            for ($j = 0; $j < count($meses); $j++) {
-                $mes = $meses[$j];
-                echo $mes . ": " . $matriz["Primavera"][$anio][$mes] . "°C\n";
-            }
-             
+        echo str_pad("Año", 8) . "| ";
+        foreach ($meses as $mes) {
+            echo str_pad($mes, 10) . "| ";
         }
+        echo "\n" . str_repeat("-", 45) . "\n";
+
+        foreach ($anios as $anio) {
+            echo str_pad($anio, 7) . "| ";
+            foreach ($meses as $mes) {
+                $valor = $matriz[$anio][$mes] . "°C";
+            
+                echo str_pad($valor, 11) . "| ";
+            }
+        echo "\n";
         
+        }
+        }
     }
 }
 // Este modulo muestra las opciones del programa y retorna la opcion elegida por la persona.
@@ -433,8 +510,7 @@ function menu(){
     echo "g. Hallar las temperaturas máximas y mínimas\n";
     echo "h. Crear y mostrar la matriz de primavera\n";
     echo "i. Crear y mostrar la matriz de invierno (últimos 5 años)\n";
-    echo "j. Crear un arreglo asociativo con las matrices completa, primavera e invierno\n";
-    echo "k. Mostrar una matriz completa, primavera o invierno\n";
+    echo "j. Mostrar una matriz completa, primavera o invierno desde un arreglo asociativo\n";
     echo "x. Salir\n";
     echo "Seleccione una opción: ";
 
@@ -471,13 +547,11 @@ do {
     } elseif ($opcion == 'g') {
         maxMin($matriz);
     } elseif ($opcion == 'h') {
-        $matrizPrimavera = crearMatrizPrimavera($matriz);
+        $matrizPrimavera = crearMatrizPrimavera($matriz, true);
     } elseif ($opcion == 'i') {
-        $matrizInvierno = crearMatrizInvierno($matriz);
-    } elseif ($opcion == 'j') {
-        $matrizAsociativa = matrizAsociativa($matriz, $matrizPrimavera, $matrizInvierno);
-    } elseif ($opcion == 'k'){
-        muestraMatrices($matrizAsociativa);
+        $matrizInvierno = crearMatrizInvierno($matriz, true);
+    } elseif ($opcion == 'j'){
+        muestraMatrices($matriz);
     }
      elseif ($opcion == 'x') {
         echo "Saliendo del programa...\n";
